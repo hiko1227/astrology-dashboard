@@ -6,29 +6,27 @@
     <title>ASTRAL CHRONICLES | 穹蒼軌跡與東方命理儀表板</title>
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Google Fonts 字體 -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Serif+TC:wght@400;650;900&display=swap" rel="stylesheet">
     <style>
+        /* 改用現代高清晰無襯線字體堆疊，徹底解決字體化學/難睇問題 */
         body {
-            font-family: 'Noto Serif TC', serif;
-            background-color: #030612;
-            color: #ffffff; /* 全局文字改為絕對清晰嘅純白 */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            background-color: #040714;
+            color: #ffffff;
+            line-height: 1.65;
+            letter-spacing: 0.03em;
             background-image: 
-                radial-gradient(circle at 50% 10%, #171d3d 0%, #070a17 60%, #030612 100%);
+                radial-gradient(circle at 50% 10%, #171d3d 0%, #070a17 60%, #040714 100%);
             min-height: 100vh;
         }
-        .cinzel-font {
-            font-family: 'Cinzel', serif;
-        }
         .gold-text {
-            color: #fcd34d; /* 更亮嘅金色 */
+            color: #fcd34d;
         }
         .gold-border {
             border: 1px solid rgba(252, 211, 77, 0.45);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
         }
         .mystic-card {
-            background: rgba(10, 14, 26, 0.98);
+            background: rgba(11, 16, 31, 0.98);
             backdrop-filter: blur(12px);
         }
         /* 五行顏色條 */
@@ -45,14 +43,14 @@
         <!-- 頂部標題列與即時日期 -->
         <header class="flex flex-col md:flex-row justify-between items-center border-b border-amber-400/30 pb-5 gap-4">
             <div>
-                <h1 class="cinzel-font text-2xl md:text-3xl font-bold gold-text tracking-wider text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
-                <p class="text-xs text-amber-200/90 tracking-widest text-center md:text-left mt-1 font-medium">東西洋星象與八字命理儀表板</p>
+                <h1 class="text-xl md:text-2xl font-bold gold-text tracking-widest text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
+                <p class="text-xs text-amber-200/90 tracking-wider text-center md:text-left mt-1 font-medium">東西洋星象與八字命理儀表板</p>
             </div>
             <div class="flex items-center space-x-3">
                 <div id="current-date-display" class="text-xs text-amber-200 gold-border px-3.5 py-2 rounded-lg bg-[#0b101f] tracking-wider font-bold">
                     <!-- 動態載入今日日期 -->
                 </div>
-                <button onclick="toggleSettings()" class="px-3.5 py-2 text-xs cinzel-font tracking-widest gold-border rounded-lg text-amber-300 hover:bg-amber-500/20 transition font-bold bg-[#0b101f]">
+                <button onclick="toggleSettings()" class="px-3.5 py-2 text-xs tracking-wider gold-border rounded-lg text-amber-300 hover:bg-amber-500/20 transition font-bold bg-[#0b101f]">
                     ⚙️ 設定
                 </button>
             </div>
@@ -60,22 +58,22 @@
 
         <!-- 設定抽屜 (預設隱藏) -->
         <div id="settings-panel" class="hidden gold-border mystic-card p-6 rounded-2xl space-y-4">
-            <h3 class="cinzel-font text-lg gold-text font-bold">本命資料設定</h3>
+            <h3 class="text-base gold-text font-bold tracking-wider">本命資料設定</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-xs text-amber-200 mb-1 font-bold">出生日期</label>
-                    <input type="date" id="birth-date" class="w-full bg-[#030612] gold-border rounded p-2.5 text-sm text-white focus:outline-none font-semibold">
+                    <label class="block text-xs text-amber-200 mb-1.5 font-bold">出生日期</label>
+                    <input type="date" id="birth-date" class="w-full bg-[#040714] gold-border rounded-lg p-3 text-sm text-white focus:outline-none font-semibold">
                 </div>
                 <div>
-                    <label class="block text-xs text-amber-200 mb-1 font-bold">出生時間 (精確)</label>
-                    <input type="time" id="birth-time" class="w-full bg-[#030612] gold-border rounded p-2.5 text-sm text-white focus:outline-none font-semibold">
+                    <label class="block text-xs text-amber-200 mb-1.5 font-bold">出生時間 (精確)</label>
+                    <input type="time" id="birth-time" class="w-full bg-[#040714] gold-border rounded-lg p-3 text-sm text-white focus:outline-none font-semibold">
                 </div>
                 <div>
-                    <label class="block text-xs text-amber-200 mb-1 font-bold">出生地點</label>
-                    <input type="text" id="birth-place" placeholder="例如：香港" class="w-full bg-[#030612] gold-border rounded p-2.5 text-sm text-white focus:outline-none font-semibold">
+                    <label class="block text-xs text-amber-200 mb-1.5 font-bold">出生地點</label>
+                    <input type="text" id="birth-place" placeholder="例如：香港" class="w-full bg-[#040714] gold-border rounded-lg p-3 text-sm text-white focus:outline-none font-semibold">
                 </div>
             </div>
-            <button onclick="saveSettings()" class="bg-amber-500 hover:bg-amber-400 text-gray-950 font-bold px-6 py-2.5 rounded text-xs cinzel-font tracking-wider transition shadow-md">
+            <button onclick="saveSettings()" class="bg-amber-500 hover:bg-amber-400 text-gray-950 font-bold px-6 py-2.5 rounded-lg text-xs tracking-wider transition shadow-md">
                 儲存設定
             </button>
         </div>
@@ -83,60 +81,60 @@
         <!-- 第一重：西洋占星核心與中式八字命理 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- 西洋占星核心 (Natal Core) - 升級為行星落點展示 -->
+            <!-- 西洋占星核心 (Natal Core) -->
             <div class="gold-border mystic-card p-6 rounded-2xl space-y-4">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-400/20 pb-2 font-bold">✦ 西洋占星核心 (Natal Core)</h2>
+                <h2 class="text-xs gold-text tracking-widest uppercase border-b border-amber-400/20 pb-2 font-bold">✦ 西洋占星核心 (Natal Core)</h2>
                 <div class="space-y-3 text-sm pt-1">
-                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">☉ 太陽星座：</span><span class="gold-text font-bold text-base">摩羯座 (Capricorn)</span></p>
+                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">☉ 太陽星座：</span><span class="gold-text font-bold text-sm">摩羯座 (Capricorn)</span></p>
                     <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">☽ 月亮星座：</span><span class="text-white font-bold text-sm">金牛座 (Taurus)</span></p>
                     <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">⬆ 上升星座：</span><span class="text-white font-bold text-sm">獅子座 (Leo)</span></p>
-                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">☿ 水星落點：</span><span class="text-white font-semibold text-sm">摩羯座 (理性嚴謹)</span></p>
-                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">♀ 金星落點：</span><span class="text-white font-semibold text-sm">天蠍座 (情感深邃)</span></p>
-                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">♂ 火星落點：</span><span class="text-white font-semibold text-sm">天秤座 (追求平衡)</span></p>
+                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">☿ 水星落點：</span><span class="text-white font-medium text-sm">摩羯座 (理性嚴謹)</span></p>
+                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">♀ 金星落點：</span><span class="text-white font-medium text-sm">天蠍座 (情感深邃)</span></p>
+                    <p class="flex justify-between items-center"><span class="text-gray-300 font-semibold">♂ 火星落點：</span><span class="text-white font-medium text-sm">天秤座 (追求平衡)</span></p>
                 </div>
             </div>
 
             <!-- 中式八字命理 (Four Pillars) -->
             <div class="gold-border mystic-card p-6 rounded-2xl space-y-4">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-400/20 pb-2 font-bold">✦ 中式八字命理 (四柱推命)</h2>
+                <h2 class="text-xs gold-text tracking-widest uppercase border-b border-amber-400/20 pb-2 font-bold">✦ 中式八字命理 (四柱推命)</h2>
                 <div class="grid grid-cols-4 gap-2.5 text-center pt-2">
-                    <div class="bg-[#030612] p-3 rounded-lg gold-border">
+                    <div class="bg-[#040714] p-3 rounded-lg gold-border">
                         <span class="text-xs text-amber-200/90 block font-bold">年柱</span>
                         <span id="bazi-year" class="gold-text font-extrabold text-base block mt-1.5">丁卯</span>
                     </div>
-                    <div class="bg-[#030612] p-3 rounded-lg gold-border">
+                    <div class="bg-[#040714] p-3 rounded-lg gold-border">
                         <span class="text-xs text-amber-200/90 block font-bold">月柱</span>
                         <span id="bazi-month" class="gold-text font-extrabold text-base block mt-1.5">壬子</span>
                     </div>
-                    <div class="bg-[#030612] p-3 rounded-lg gold-border">
+                    <div class="bg-[#040714] p-3 rounded-lg gold-border">
                         <span class="text-xs text-amber-200/90 block font-bold">日柱</span>
                         <span id="bazi-day" class="gold-text font-extrabold text-base block mt-1.5">戊辰</span>
                     </div>
-                    <div class="bg-[#030612] p-3 rounded-lg gold-border">
+                    <div class="bg-[#040714] p-3 rounded-lg gold-border">
                         <span class="text-xs text-amber-200/90 block font-bold">時柱</span>
                         <span id="bazi-hour" class="gold-text font-extrabold text-base block mt-1.5">戊午</span>
                     </div>
                 </div>
                 <div class="text-sm text-white pt-3 flex justify-between items-center border-t border-amber-400/10">
-                    <span class="text-gray-300 font-semibold">日主天干：<strong id="bazi-master" class="gold-text text-base">戊土 (城牆土)</strong></span>
-                    <span class="text-amber-300 text-xs font-bold">✦ 厚重穩健 承載乾坤 ✦</span>
+                    <span class="text-gray-300 font-semibold">日主天干：<strong id="bazi-master" class="gold-text text-sm">戊土 (城牆土)</strong></span>
+                    <span class="text-amber-300 text-xs font-bold">✦ 厚重穩健 ✦</span>
                 </div>
             </div>
 
         </div>
 
-        <!-- 第二重：Master's Oracle 運勢批算 (已清理多餘字眼，提升對比) -->
+        <!-- 第二重：Master's Oracle 運勢批算 -->
         <div class="gold-border mystic-card p-6 rounded-2xl space-y-5">
             <div class="flex items-center justify-between border-b border-amber-400/20 pb-3">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase font-bold">✦ Master's Oracle (天機批算)</h2>
+                <h2 class="text-xs gold-text tracking-widest uppercase font-bold">✦ Master's Oracle (天機批算)</h2>
                 <span class="text-xs text-amber-300 tracking-wider font-semibold">Celestial Guidance</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <!-- 流年運情 -->
-                <div class="bg-[#030612] p-4.5 rounded-xl gold-border space-y-2.5">
+                <div class="bg-[#040714] p-4.5 rounded-xl gold-border space-y-2.5">
                     <div class="flex items-center justify-between">
-                        <span class="cinzel-font text-xs text-amber-300 font-bold uppercase">☯ 當年流年 (Yearly)</span>
+                        <span class="text-xs text-amber-300 font-bold uppercase tracking-wide">☯ 當年流年 (Yearly)</span>
                         <span class="text-xs text-amber-200 font-bold">丙午馬年</span>
                     </div>
                     <p class="text-sm text-gray-100 leading-relaxed font-normal">
@@ -145,9 +143,9 @@
                 </div>
 
                 <!-- 流月運情 -->
-                <div class="bg-[#030612] p-4.5 rounded-xl gold-border space-y-2.5">
+                <div class="bg-[#040714] p-4.5 rounded-xl gold-border space-y-2.5">
                     <div class="flex items-center justify-between">
-                        <span class="cinzel-font text-xs text-amber-300 font-bold uppercase">☯ 當月流月 (Monthly)</span>
+                        <span class="text-xs text-amber-300 font-bold uppercase tracking-wide">☯ 當月流月 (Monthly)</span>
                         <span id="current-month-label" class="text-xs text-amber-200 font-bold">本月運勢</span>
                     </div>
                     <p class="text-sm text-gray-100 leading-relaxed font-normal">
@@ -156,9 +154,9 @@
                 </div>
 
                 <!-- 流日運情 -->
-                <div class="bg-[#030612] p-4.5 rounded-xl gold-border space-y-2.5">
+                <div class="bg-[#040714] p-4.5 rounded-xl gold-border space-y-2.5">
                     <div class="flex items-center justify-between">
-                        <span class="cinzel-font text-xs text-amber-300 font-bold uppercase">☯ 今日流日 (Daily)</span>
+                        <span class="text-xs text-amber-300 font-bold uppercase tracking-wide">☯ 今日流日 (Daily)</span>
                         <span class="text-xs text-amber-200 font-bold">今日能量</span>
                     </div>
                     <p class="text-sm text-gray-100 leading-relaxed font-normal">
@@ -171,7 +169,7 @@
         <!-- 第三重：個人先天五行能量分佈表 -->
         <div class="gold-border mystic-card p-6 rounded-2xl space-y-5">
             <div class="border-b border-amber-400/20 pb-3 flex justify-between items-center">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase font-bold">✦ 先天五行能量分佈 (Five Elements Balance)</h2>
+                <h2 class="text-xs gold-text tracking-widest uppercase font-bold">✦ 先天五行能量分佈 (Five Elements Balance)</h2>
                 <span class="text-xs text-amber-300 font-bold">能量強弱一目了然</span>
             </div>
             <p class="text-sm text-gray-200 font-medium">依據閣下本命八字結構所推演出的五行能量比例，幫助你了解自身能量的偏重與互補方向：</p>
@@ -228,7 +226,7 @@
                 </div>
             </div>
             
-            <div class="bg-[#030612] p-4 rounded-xl gold-border text-sm text-gray-100 flex items-center space-x-3.5">
+            <div class="bg-[#040714] p-4 rounded-xl gold-border text-sm text-gray-100 flex items-center space-x-3.5">
                 <span class="text-amber-400 text-xl font-bold">💡</span>
                 <span><strong>大師建議：</strong>閣下命格水木清華，心思靈敏，極適合事例文學或創作。近期可多穿著金屬色系或白色衣物以平衡金氣，行事更見圓融。</span>
             </div>
