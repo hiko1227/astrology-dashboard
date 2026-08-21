@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRAL CHRONICLES | 穹蒼軌跡與命運密碼</title>
+    <title>ASTRAL CHRONICLES | 穹蒼軌跡與東方命理儀表板</title>
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts 復古/神祕字體 -->
@@ -39,7 +39,7 @@
         .gold-bg {
             background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa771c 100%);
         }
-        /* 星盤複雜旋轉動畫 */
+        /* 星盤旋轉動畫 */
         @keyframes slow-spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -66,15 +66,20 @@
 <body class="p-4 md:p-8">
     <div class="max-w-4xl mx-auto space-y-6">
         
-        <!-- 頂部標題列 -->
-        <header class="flex flex-col md:flex-row justify-between items-center border-b border-amber-500/30 pb-6">
+        <!-- 頂部標題列與即時日期 -->
+        <header class="flex flex-col md:flex-row justify-between items-center border-b border-amber-500/30 pb-6 gap-4">
             <div>
-                <h1 class="cinzel-font text-3xl md:text-4xl font-bold gold-foil-text tracking-wider text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
-                <p class="text-xs text-amber-200/60 tracking-widest text-center md:text-left mt-1">穹蒼軌跡與命運密碼</p>
+                <h1 class="cinzel-font text-2xl md:text-3xl font-bold gold-foil-text tracking-wider text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
+                <p class="text-xs text-amber-200/60 tracking-widest text-center md:text-left mt-1">東西洋星象與八字命理儀表板</p>
             </div>
-            <button onclick="toggleSettings()" class="mt-4 md:mt-0 px-4 py-2 text-xs cinzel-font tracking-widest gold-border rounded-lg text-amber-300 hover:bg-amber-500/20 transition shadow-lg">
-                ⚙️ 本命盤設定
-            </button>
+            <div class="flex items-center space-x-3">
+                <div id="current-date-display" class="text-xs text-amber-300 gold-border px-3 py-2 rounded-lg bg-[#0b101f] tracking-wider">
+                    <!-- 動態載入今日日期 -->
+                </div>
+                <button onclick="toggleSettings()" class="px-3 py-2 text-xs cinzel-font tracking-widest gold-border rounded-lg text-amber-300 hover:bg-amber-500/20 transition shadow-lg">
+                    ⚙️ 命盤設定
+                </button>
+            </div>
         </header>
 
         <!-- 設定抽屜 (預設隱藏) -->
@@ -99,12 +104,12 @@
             </button>
         </div>
 
-        <!-- 核心資訊卡片區 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 第一重：西占本命核心與中式八字命理 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- 本命盤速查 -->
+            <!-- 西洋本命盤速查 -->
             <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
-                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 本命盤核心</h2>
+                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 西洋占星核心 (Natal Core)</h2>
                 <div class="space-y-2 text-sm">
                     <p class="flex justify-between"><span class="text-gray-400">太陽星座：</span><span id="display-sun" class="gold-foil-text font-bold">-</span></p>
                     <p class="flex justify-between"><span class="text-gray-400">出生日期：</span><span id="display-date" class="text-amber-100">-</span></p>
@@ -113,54 +118,89 @@
                 </div>
             </div>
 
-            <!-- 今日星象能量 -->
+            <!-- 中式八字命理 (Four Pillars) -->
             <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
-                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 今日宇宙頻率</h2>
-                <div class="space-y-3 text-sm">
-                    <div>
-                        <span class="text-xs text-amber-200/60 block">當年月相</span>
-                        <span class="gold-foil-text font-semibold text-base">盈凸月 (Waxing Gibbous)</span>
+                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 中式八字命理 (四柱推命)</h2>
+                <div class="grid grid-cols-4 gap-2 text-center pt-1">
+                    <div class="bg-[#03050b] p-2 rounded gold-border">
+                        <span class="text-[10px] text-amber-200/60 block">年柱</span>
+                        <span id="bazi-year" class="gold-foil-text font-bold text-sm block mt-1">丁卯</span>
                     </div>
-                    <div>
-                        <span class="text-xs text-amber-200/60 block">今日關鍵能量</span>
-                        <p class="text-xs text-gray-300 mt-1">直覺力敏銳，適合整理思緒、為即將到來的目標做最後部署。</p>
+                    <div class="bg-[#03050b] p-2 rounded gold-border">
+                        <span class="text-[10px] text-amber-200/60 block">月柱</span>
+                        <span id="bazi-month" class="gold-foil-text font-bold text-sm block mt-1">壬子</span>
+                    </div>
+                    <div class="bg-[#03050b] p-2 rounded gold-border">
+                        <span class="text-[10px] text-amber-200/60 block">日柱</span>
+                        <span id="bazi-day" class="gold-foil-text font-bold text-sm block mt-1">戊辰</span>
+                    </div>
+                    <div class="bg-[#03050b] p-2 rounded gold-border">
+                        <span class="text-[10px] text-amber-200/60 block">時柱</span>
+                        <span id="bazi-hour" class="gold-foil-text font-bold text-sm block mt-1">癸亥</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- 本月焦點轉折 -->
-            <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
-                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 本月星象提示</h2>
-                <ul class="space-y-2 text-xs text-gray-300">
-                    <li class="flex items-start space-x-2">
-                        <span class="text-amber-400">⚡</span>
-                        <span>注意人際溝通，避免過度主觀。</span>
-                    </li>
-                    <li class="flex items-start space-x-2">
-                        <span class="text-amber-400">🌙</span>
-                        <span>新月前後適合釐清內心深處渴望。</span>
-                    </li>
-                </ul>
+                <div class="text-xs text-gray-300 pt-1 flex justify-between items-center">
+                    <span class="text-gray-400">日主天干：<strong id="bazi-master" class="gold-text">戊土 (城牆土)</strong></span>
+                    <span class="text-amber-300/80 text-[11px]">✦ 命格厚重 承載乾坤 ✦</span>
+                </div>
             </div>
 
         </div>
 
-        <!-- 本命星圖專區 (Astral Chart Wheel) - 豪華升級版 -->
+        <!-- 第二重：八旬星盤命理大師 運勢批算 (Year, Month, Day) -->
+        <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-5">
+            <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
+                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase">✦ 八旬宗師天機批算 (Master's Oracle)</h2>
+                <span class="text-[11px] text-amber-300/70 tracking-wider">傳承八十年命理智慧・觀天道而知人事</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <!-- 流年運情 -->
+                <div class="bg-[#03050b]/70 p-4 rounded-xl gold-border space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="cinzel-font text-xs text-amber-300 font-semibold uppercase">☯ 當年流年 (Yearly Mandate)</span>
+                        <span class="text-[10px] text-amber-200/50">丙午馬年</span>
+                    </div>
+                    <p id="master-year-text" class="text-xs text-gray-300 leading-relaxed">
+                        「流年火旺生土，印星高透。今年乃沉潛後厚積薄發之期，事業上有貴人暗中扶持，心態宜穩不宜急，自可破局立新。」
+                    </p>
+                </div>
+
+                <!-- 流月運情 -->
+                <div class="bg-[#03050b]/70 p-4 rounded-xl gold-border space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="cinzel-font text-xs text-amber-300 font-semibold uppercase">☯ 當月流月 (Monthly Flow)</span>
+                        <span id="current-month-label" class="text-[10px] text-amber-200/50">本月運勢</span>
+                    </div>
+                    <p id="master-month-text" class="text-xs text-gray-300 leading-relaxed">
+                        「月令金水相生，食傷泄秀。靈感創意如泉湧，適合處理文字創作、規劃長遠藍圖。人際交游中多見知音，切忌過度內耗。」
+                    </p>
+                </div>
+
+                <!-- 流日運情 -->
+                <div class="bg-[#03050b]/70 p-4 rounded-xl gold-border space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="cinzel-font text-xs text-amber-300 font-semibold uppercase">☯ 今日流日 (Daily Guidance)</span>
+                        <span class="text-[10px] text-amber-200/50">今日能量</span>
+                    </div>
+                    <p id="master-day-text" class="text-xs text-gray-300 leading-relaxed">
+                        「日支相合，氣場清明。今日行事阻力大減，直覺敏銳。若有懸而未決之繁瑣事宜，今日決斷往往能一針見血。」
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三重：本命星圖精密輪盤 (Natal Chart Wheel) -->
         <div class="gold-border mystic-card p-6 rounded-2xl gold-glow flex flex-col items-center space-y-4">
-            <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2 w-full text-left">✦ 本命星圖精密輪盤 (Natal Chart Wheel)</h2>
-            <p class="text-xs text-amber-200/60 text-center">結合黃道十二宮刻度、相位交角與動態星體軌跡的專業占星盤</p>
+            <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2 w-full text-left">✦ 東西合璧星圖精密輪盤 (Astro-BaZi Wheel)</h2>
+            <p class="text-xs text-amber-200/60 text-center">融合黃道十二宮刻度與東方二十八宿軌跡的動態儀表板</p>
             
-            <!-- 高精度 SVG 占星盤 -->
             <div class="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center my-4">
-                
                 <!-- 外層旋轉黃道盤 -->
                 <svg class="absolute inset-0 w-full h-full animate-slow-spin text-amber-500/30" viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="0.75">
-                    <!-- 最外環裝飾 -->
                     <circle cx="150" cy="150" r="145" stroke="#d4af37" stroke-width="2" stroke-opacity="0.8"/>
                     <circle cx="150" cy="150" r="140" stroke="#d4af37" stroke-width="1" stroke-opacity="0.5"/>
                     <circle cx="150" cy="150" r="115" stroke="#d4af37" stroke-width="1" stroke-opacity="0.6"/>
-                    
-                    <!-- 12宮位細密刻度 (模擬) -->
                     <g stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.5">
                         <line x1="150" y1="5" x2="150" y2="25"/>
                         <line x1="150" y1="275" x2="150" y2="295"/>
@@ -170,37 +210,30 @@
                         <line x1="239" y1="239" x2="253" y2="253"/>
                         <line x1="47" y1="253" x2="61" y2="239"/>
                         <line x1="239" y1="61" x2="253" y2="47"/>
-                        <!-- 額外分隔斜線 -->
-                        <line x1="87" y1="13" x2="97" y2="31"/>
-                        <line x1="213" y1="269" x2="203" y2="287"/>
-                        <line x1="13" y1="87" x2="31" y2="97"/>
-                        <line x1="269" y1="213" x2="287" y2="203"/>
                     </g>
                 </svg>
 
                 <!-- 內層反向旋轉相位盤 -->
                 <svg class="absolute inset-0 w-full h-full animate-reverse-spin text-cyan-400/30" viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="0.5">
                     <circle cx="150" cy="150" r="95" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/>
-                    <!-- 相位交角線 (Aspects polygon) -->
                     <polygon points="150,60 230,120 200,220 100,220 70,120" stroke="#38bdf8" stroke-width="0.75" stroke-opacity="0.5" fill="rgba(56, 189, 248, 0.03)"/>
                     <polygon points="150,240 80,170 120,80 180,80 220,170" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.3" fill="none"/>
                 </svg>
 
-                <!-- 核心符號與光暈 -->
+                <!-- 核心符號 -->
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500/20 to-purple-900/40 gold-border flex items-center justify-center gold-foil-text cinzel-font text-2xl font-bold shadow-[0_0_20px_rgba(212,175,55,0.4)]">
                         🜛
                     </div>
                 </div>
 
-                <!-- 浮動行星標記 (裝飾點綴) -->
-                <div class="absolute top-6 left-1/2 -translate-x-1/2 text-amber-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded gold-border">☉ 太陽</div>
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-cyan-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-cyan-500/30">☽ 月亮</div>
-                <div class="absolute left-6 top-1/2 -translate-y-1/2 text-purple-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-purple-500/30">☿ 水星</div>
-                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-rose-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-rose-500/30">♀ 金星</div>
-
+                <!-- 浮動行星與天干標記 -->
+                <div class="absolute top-6 left-1/2 -translate-x-1/2 text-amber-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded gold-border">☉ 太陽 / 命宮</div>
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-cyan-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-cyan-500/30">☽ 月亮 / 身宮</div>
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 text-purple-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-purple-500/30">☿ 文昌 / 水星</div>
+                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-rose-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-rose-500/30">♀ 桃花 / 金星</div>
             </div>
-            <span class="text-[10px] tracking-widest gold-foil-text uppercase">✦ Celestial Geometry Synchronized ✦</span>
+            <span class="text-[10px] tracking-widest gold-foil-text uppercase">✦ Celestial & Metaphysical Harmony Synchronized ✦</span>
         </div>
 
     </div>
@@ -215,6 +248,13 @@
             const dates = [20, 19, 21, 20, 21, 22, 23, 23, 23, 23, 22, 22];
             const signs = ['摩羯座', '水瓶座', '雙魚座', '白羊座', '金牛座', '雙子座', '巨蟹座', '獅子座', '處女座', '天秤座', '天蠍座', '射手座', '摩羯座'];
             return day < dates[month - 1] ? signs[month - 1] : signs[month];
+        }
+
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('current-date-display').innerText = `📅 ${now.toLocaleDateString('zh-HK', options)}`;
+            document.getElementById('current-month-label').innerText = `${now.getMonth() + 1}月流月運勢`;
         }
 
         function saveSettings() {
@@ -232,28 +272,51 @@
         }
 
         function loadSettings() {
-            const date = localStorage.getItem('birth_date');
-            const time = localStorage.getItem('birth_time');
-            const place = localStorage.getItem('birth_place');
+            // 預設採用 1987-12-27 (如果用家未有自行設定)
+            let date = localStorage.getItem('birth_date');
+            if (!date) {
+                date = '1987-12-27'; //
+                localStorage.setItem('birth_date', date);
+                localStorage.setItem('birth_time', '12:00');
+                localStorage.setItem('birth_place', '香港');
+            }
 
-            if (date) {
-                document.getElementById('display-date').innerText = date;
-                document.getElementById('birth-date').value = date;
-                
-                const [year, month, day] = date.split('-').map(Number);
-                document.getElementById('display-sun').innerText = getZodiacSign(day, month);
-            }
-            if (time) {
-                document.getElementById('display-time').innerText = time;
-                document.getElementById('birth-time').value = time;
-            }
-            if (place) {
-                document.getElementById('display-place').innerText = place;
-                document.getElementById('birth-place').value = place;
+            const time = localStorage.getItem('birth_time') || '12:00';
+            const place = localStorage.getItem('birth_place') || '香港';
+
+            document.getElementById('display-date').innerText = date;
+            document.getElementById('birth-date').value = date;
+            document.getElementById('display-time').innerText = time;
+            document.getElementById('birth-time').value = time;
+            document.getElementById('display-place').innerText = place;
+            document.getElementById('birth-place').value = place;
+            
+            const [year, month, day] = date.split('-').map(Number);
+            document.getElementById('display-sun').innerText = getZodiacSign(day, month);
+
+            // 簡單根據出生年份計算擬真八字（展現東方命理結構）
+            if (year === 1987) {
+                document.getElementById('bazi-year').innerText = '丁卯';
+                document.getElementById('bazi-month').innerText = '壬子';
+                document.getElementById('bazi-day').innerText = '戊辰';
+                document.getElementById('bazi-hour').innerText = '戊午';
+                document.getElementById('bazi-master').innerText = '戊土 (城牆土)';
+            } else {
+                // 通用動態推算示範
+                const stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+                const branches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+                document.getElementById('bazi-year').innerText = stems[(year - 4) % 10] + branches[(year - 4) % 12];
+                document.getElementById('bazi-month').innerText = stems[(month + 2) % 10] + branches[(month + 2) % 12];
+                document.getElementById('bazi-day').innerText = '丙申';
+                document.getElementById('bazi-hour').innerText = '庚寅';
+                document.getElementById('bazi-master').innerText = stems[(year - 4) % 10] + '行命主';
             }
         }
 
-        window.onload = loadSettings;
+        window.onload = function() {
+            updateCurrentDate();
+            loadSettings();
+        };
     </script>
 </body>
 </html>
