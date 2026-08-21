@@ -11,34 +11,55 @@
     <style>
         body {
             font-family: 'Noto Serif TC', serif;
-            background-color: #070913;
+            background-color: #03050b;
             color: #e2e8f0;
-            background-image: radial-gradient(circle at 50% 20%, #1a1c36 0%, #070913 70%);
+            background-image: 
+                radial-gradient(circle at 50% 15%, #181d3d 0%, #070914 50%, #03050b 100%),
+                radial-gradient(circle at 20% 80%, rgba(76, 29, 149, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
             min-height: 100vh;
         }
         .cinzel-font {
             font-family: 'Cinzel', serif;
         }
+        /* 奢華金箔文字效果 */
+        .gold-foil-text {
+            background: linear-gradient(135deg, #fff2b2 0%, #d4af37 50%, #aa771c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.3));
+        }
         .gold-border {
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.05), 0 0 20px rgba(0, 0, 0, 0.8);
         }
         .gold-glow {
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
-        }
-        .gold-text {
-            color: #f3e5ab;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.12), inset 0 0 10px rgba(212, 175, 55, 0.05);
         }
         .gold-bg {
-            background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa771c 100%);
         }
-        /* 星盤旋轉動畫裝飾 */
+        /* 星盤複雜旋轉動畫 */
         @keyframes slow-spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+        @keyframes reverse-spin {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
         .animate-slow-spin {
-            animation: slow-spin 120s linear infinite;
+            animation: slow-spin 180s linear infinite;
             transform-origin: center;
+        }
+        .animate-reverse-spin {
+            animation: reverse-spin 120s linear infinite;
+            transform-origin: center;
+        }
+        /* 卡片玻璃質感 */
+        .mystic-card {
+            background: linear-gradient(135deg, rgba(13, 18, 38, 0.85) 0%, rgba(7, 10, 20, 0.95) 100%);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
@@ -48,32 +69,32 @@
         <!-- 頂部標題列 -->
         <header class="flex flex-col md:flex-row justify-between items-center border-b border-amber-500/30 pb-6">
             <div>
-                <h1 class="cinzel-font text-3xl md:text-4xl font-bold gold-text tracking-wider text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
+                <h1 class="cinzel-font text-3xl md:text-4xl font-bold gold-foil-text tracking-wider text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
                 <p class="text-xs text-amber-200/60 tracking-widest text-center md:text-left mt-1">穹蒼軌跡與命運密碼</p>
             </div>
-            <button onclick="toggleSettings()" class="mt-4 md:mt-0 px-4 py-2 text-xs cinzel-font tracking-widest gold-border rounded-lg text-amber-300 hover:bg-amber-500/10 transition">
+            <button onclick="toggleSettings()" class="mt-4 md:mt-0 px-4 py-2 text-xs cinzel-font tracking-widest gold-border rounded-lg text-amber-300 hover:bg-amber-500/20 transition shadow-lg">
                 ⚙️ 本命盤設定
             </button>
         </header>
 
         <!-- 設定抽屜 (預設隱藏) -->
-        <div id="settings-panel" class="hidden gold-border bg-[#0f1423] p-6 rounded-2xl gold-glow space-y-4">
-            <h3 class="cinzel-font text-lg gold-text font-semibold">輸入你的出生密碼</h3>
+        <div id="settings-panel" class="hidden gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
+            <h3 class="cinzel-font text-lg gold-foil-text font-semibold">輸入你的出生密碼</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-xs text-amber-200/70 mb-1">出生日期</label>
-                    <input type="date" id="birth-date" class="w-full bg-[#070913] gold-border rounded p-2 text-sm text-amber-100 focus:outline-none">
+                    <input type="date" id="birth-date" class="w-full bg-[#03050b] gold-border rounded p-2 text-sm text-amber-100 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs text-amber-200/70 mb-1">出生時間 (精確)</label>
-                    <input type="time" id="birth-time" class="w-full bg-[#070913] gold-border rounded p-2 text-sm text-amber-100 focus:outline-none">
+                    <input type="time" id="birth-time" class="w-full bg-[#03050b] gold-border rounded p-2 text-sm text-amber-100 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs text-amber-200/70 mb-1">出生地點</label>
-                    <input type="text" id="birth-place" placeholder="例如：香港" class="w-full bg-[#070913] gold-border rounded p-2 text-sm text-amber-100 focus:outline-none">
+                    <input type="text" id="birth-place" placeholder="例如：香港" class="w-full bg-[#03050b] gold-border rounded p-2 text-sm text-amber-100 focus:outline-none">
                 </div>
             </div>
-            <button onclick="saveSettings()" class="gold-bg text-gray-950 font-bold px-6 py-2 rounded text-xs cinzel-font tracking-wider hover:opacity-90 transition">
+            <button onclick="saveSettings()" class="gold-bg text-gray-950 font-bold px-6 py-2 rounded text-xs cinzel-font tracking-wider hover:opacity-90 transition shadow-md">
                 儲存設定
             </button>
         </div>
@@ -82,23 +103,23 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             <!-- 本命盤速查 -->
-            <div class="gold-border bg-[#0b101f]/80 p-6 rounded-2xl gold-glow space-y-4">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 本命盤核心</h2>
+            <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
+                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 本命盤核心</h2>
                 <div class="space-y-2 text-sm">
-                    <p class="flex justify-between"><span class="text-gray-400">太陽星座：</span><span id="display-sun" class="gold-font font-bold gold-text">-</span></p>
-                    <p class="flex justify-between"><span class="text-gray-400">出生日期：</span><span id="display-date">-</span></p>
-                    <p class="flex justify-between"><span class="text-gray-400">出生時間：</span><span id="display-time">-</span></p>
-                    <p class="flex justify-between"><span class="text-gray-400">出生地點：</span><span id="display-place">-</span></p>
+                    <p class="flex justify-between"><span class="text-gray-400">太陽星座：</span><span id="display-sun" class="gold-foil-text font-bold">-</span></p>
+                    <p class="flex justify-between"><span class="text-gray-400">出生日期：</span><span id="display-date" class="text-amber-100">-</span></p>
+                    <p class="flex justify-between"><span class="text-gray-400">出生時間：</span><span id="display-time" class="text-amber-100">-</span></p>
+                    <p class="flex justify-between"><span class="text-gray-400">出生地點：</span><span id="display-place" class="text-amber-100">-</span></p>
                 </div>
             </div>
 
             <!-- 今日星象能量 -->
-            <div class="gold-border bg-[#0b101f]/80 p-6 rounded-2xl gold-glow space-y-4">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 今日宇宙頻率</h2>
+            <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
+                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 今日宇宙頻率</h2>
                 <div class="space-y-3 text-sm">
                     <div>
                         <span class="text-xs text-amber-200/60 block">當年月相</span>
-                        <span class="gold-text font-semibold text-base">盈凸月 (Waxing Gibbous)</span>
+                        <span class="gold-foil-text font-semibold text-base">盈凸月 (Waxing Gibbous)</span>
                     </div>
                     <div>
                         <span class="text-xs text-amber-200/60 block">今日關鍵能量</span>
@@ -108,8 +129,8 @@
             </div>
 
             <!-- 本月焦點轉折 -->
-            <div class="gold-border bg-[#0b101f]/80 p-6 rounded-2xl gold-glow space-y-4">
-                <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 本月星象提示</h2>
+            <div class="gold-border mystic-card p-6 rounded-2xl gold-glow space-y-4">
+                <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 本月星象提示</h2>
                 <ul class="space-y-2 text-xs text-gray-300">
                     <li class="flex items-start space-x-2">
                         <span class="text-amber-400">⚡</span>
@@ -124,38 +145,62 @@
 
         </div>
 
-        <!-- 本命星圖專區 (Astral Chart Wheel) -->
-        <div class="gold-border bg-[#0b101f]/80 p-6 rounded-2xl gold-glow flex flex-col items-center space-y-4">
-            <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-500/20 pb-2 w-full text-left">✦ 本命星圖視覺化 (Natal Chart)</h2>
-            <p class="text-xs text-amber-200/60 text-center">依據你的個人命盤軌跡生成的動態星體輪盤</p>
+        <!-- 本命星圖專區 (Astral Chart Wheel) - 豪華升級版 -->
+        <div class="gold-border mystic-card p-6 rounded-2xl gold-glow flex flex-col items-center space-y-4">
+            <h2 class="cinzel-font text-sm gold-foil-text tracking-widest uppercase border-b border-amber-500/20 pb-2 w-full text-left">✦ 本命星圖精密輪盤 (Natal Chart Wheel)</h2>
+            <p class="text-xs text-amber-200/60 text-center">結合黃道十二宮刻度、相位交角與動態星體軌跡的專業占星盤</p>
             
-            <!--  SVG 星盤輪盤 -->
-            <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center my-2">
-                <svg class="w-full h-full animate-slow-spin text-amber-500/40" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.75">
-                    <!-- 外圈黃金圓 -->
-                    <circle cx="100" cy="100" r="95" stroke="#d4af37" stroke-width="1.5" stroke-opacity="0.6"/>
-                    <circle cx="100" cy="100" r="75" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.4"/>
-                    <circle cx="100" cy="100" r="50" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.4"/>
-                    
-                    <!-- 十字軸線 (Ascendant / MC) -->
-                    <line x1="5" y1="100" x2="195" y2="100" stroke="#d4af37" stroke-opacity="0.5"/>
-                    <line x1="100" y1="5" x2="100" y2="195" stroke="#d4af37" stroke-opacity="0.5"/>
-                    
-                    <!-- 宮位分隔斜線 -->
-                    <line x1="33" y1="33" x2="167" y2="167" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
-                    <line x1="33" y1="167" x2="167" y2="33" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
-                    <line x1="12" y1="60" x2="188" y2="140" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
-                    <line x1="60" y1="12" x2="140" y2="188" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
-                </svg>
+            <!-- 高精度 SVG 占星盤 -->
+            <div class="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center my-4">
                 
-                <!-- 核心符號標記 -->
+                <!-- 外層旋轉黃道盤 -->
+                <svg class="absolute inset-0 w-full h-full animate-slow-spin text-amber-500/30" viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="0.75">
+                    <!-- 最外環裝飾 -->
+                    <circle cx="150" cy="150" r="145" stroke="#d4af37" stroke-width="2" stroke-opacity="0.8"/>
+                    <circle cx="150" cy="150" r="140" stroke="#d4af37" stroke-width="1" stroke-opacity="0.5"/>
+                    <circle cx="150" cy="150" r="115" stroke="#d4af37" stroke-width="1" stroke-opacity="0.6"/>
+                    
+                    <!-- 12宮位細密刻度 (模擬) -->
+                    <g stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.5">
+                        <line x1="150" y1="5" x2="150" y2="25"/>
+                        <line x1="150" y1="275" x2="150" y2="295"/>
+                        <line x1="5" y1="150" x2="25" y2="150"/>
+                        <line x1="275" y1="150" x2="295" y2="150"/>
+                        <line x1="47" y1="47" x2="61" y2="61"/>
+                        <line x1="239" y1="239" x2="253" y2="253"/>
+                        <line x1="47" y1="253" x2="61" y2="239"/>
+                        <line x1="239" y1="61" x2="253" y2="47"/>
+                        <!-- 額外分隔斜線 -->
+                        <line x1="87" y1="13" x2="97" y2="31"/>
+                        <line x1="213" y1="269" x2="203" y2="287"/>
+                        <line x1="13" y1="87" x2="31" y2="97"/>
+                        <line x1="269" y1="213" x2="287" y2="203"/>
+                    </g>
+                </svg>
+
+                <!-- 內層反向旋轉相位盤 -->
+                <svg class="absolute inset-0 w-full h-full animate-reverse-spin text-cyan-400/30" viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="0.5">
+                    <circle cx="150" cy="150" r="95" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/>
+                    <!-- 相位交角線 (Aspects polygon) -->
+                    <polygon points="150,60 230,120 200,220 100,220 70,120" stroke="#38bdf8" stroke-width="0.75" stroke-opacity="0.5" fill="rgba(56, 189, 248, 0.03)"/>
+                    <polygon points="150,240 80,170 120,80 180,80 220,170" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.3" fill="none"/>
+                </svg>
+
+                <!-- 核心符號與光暈 -->
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div class="w-16 h-16 rounded-full bg-amber-500/10 gold-border flex items-center justify-center gold-text cinzel-font text-lg font-bold shadow-[0_0_10px_rgba(212,175,55,0.3)]">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500/20 to-purple-900/40 gold-border flex items-center justify-center gold-foil-text cinzel-font text-2xl font-bold shadow-[0_0_20px_rgba(212,175,55,0.4)]">
                         🜛
                     </div>
                 </div>
+
+                <!-- 浮動行星標記 (裝飾點綴) -->
+                <div class="absolute top-6 left-1/2 -translate-x-1/2 text-amber-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded gold-border">☉ 太陽</div>
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-cyan-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-cyan-500/30">☽ 月亮</div>
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 text-purple-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-purple-500/30">☿ 水星</div>
+                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-rose-300 text-xs tracking-widest bg-[#03050b]/80 px-2 py-0.5 rounded border border-rose-500/30">♀ 金星</div>
+
             </div>
-            <span class="text-[10px] tracking-widest text-amber-300/80 uppercase">✦ Aetherial Coordinates Locked ✦</span>
+            <span class="text-[10px] tracking-widest gold-foil-text uppercase">✦ Celestial Geometry Synchronized ✦</span>
         </div>
 
     </div>
