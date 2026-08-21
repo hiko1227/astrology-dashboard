@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人星盤能量儀表板 | Mystic Dashboard</title>
+    <title>ASTRAL CHRONICLES | 穹蒼軌跡與命運密碼</title>
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts 復古/神祕字體 -->
@@ -31,6 +31,15 @@
         .gold-bg {
             background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
         }
+        /* 星盤旋轉動畫裝飾 */
+        @keyframes slow-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-slow-spin {
+            animation: slow-spin 120s linear infinite;
+            transform-origin: center;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -39,8 +48,8 @@
         <!-- 頂部標題列 -->
         <header class="flex flex-col md:flex-row justify-between items-center border-b border-amber-500/30 pb-6">
             <div>
-                <h1 class="cinzel-font text-3xl md:text-4xl font-bold gold-text tracking-wider text-center md:text-left">✨ ASTROLOGY DASHBOARD</h1>
-                <p class="text-xs text-amber-200/60 tracking-widest text-center md:text-left mt-1">你的專屬宇宙能量儀表板</p>
+                <h1 class="cinzel-font text-3xl md:text-4xl font-bold gold-text tracking-wider text-center md:text-left">✦ ASTRAL CHRONICLES ✦</h1>
+                <p class="text-xs text-amber-200/60 tracking-widest text-center md:text-left mt-1">穹蒼軌跡與命運密碼</p>
             </div>
             <button onclick="toggleSettings()" class="mt-4 md:mt-0 px-4 py-2 text-xs cinzel-font tracking-widest gold-border rounded-lg text-amber-300 hover:bg-amber-500/10 transition">
                 ⚙️ 本命盤設定
@@ -115,15 +124,38 @@
 
         </div>
 
-        <!-- 底部能量筆記 / 待辦 -->
-        <div class="gold-border bg-[#0b101f]/80 p-6 rounded-2xl gold-glow space-y-4">
-            <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-500/20 pb-2">✦ 每日靈感與反思 Journal</h2>
-            <textarea placeholder="寫低你今日感受到嘅直覺、夢境或者星象感應..." class="w-full h-24 bg-[#070913] gold-border rounded-lg p-3 text-sm text-amber-100 focus:outline-none resize-none"></textarea>
-            <div class="flex justify-end">
-                <button onclick="alert('筆記已儲存至心靈深處 ✨')" class="gold-bg text-gray-950 font-bold px-4 py-2 rounded text-xs cinzel-font tracking-wider hover:opacity-90 transition">
-                    記錄能量
-                </button>
+        <!-- 本命星圖專區 (Astral Chart Wheel) -->
+        <div class="gold-border bg-[#0b101f]/80 p-6 rounded-2xl gold-glow flex flex-col items-center space-y-4">
+            <h2 class="cinzel-font text-sm gold-text tracking-widest uppercase border-b border-amber-500/20 pb-2 w-full text-left">✦ 本命星圖視覺化 (Natal Chart)</h2>
+            <p class="text-xs text-amber-200/60 text-center">依據你的個人命盤軌跡生成的動態星體輪盤</p>
+            
+            <!--  SVG 星盤輪盤 -->
+            <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center my-2">
+                <svg class="w-full h-full animate-slow-spin text-amber-500/40" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.75">
+                    <!-- 外圈黃金圓 -->
+                    <circle cx="100" cy="100" r="95" stroke="#d4af37" stroke-width="1.5" stroke-opacity="0.6"/>
+                    <circle cx="100" cy="100" r="75" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.4"/>
+                    <circle cx="100" cy="100" r="50" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.4"/>
+                    
+                    <!-- 十字軸線 (Ascendant / MC) -->
+                    <line x1="5" y1="100" x2="195" y2="100" stroke="#d4af37" stroke-opacity="0.5"/>
+                    <line x1="100" y1="5" x2="100" y2="195" stroke="#d4af37" stroke-opacity="0.5"/>
+                    
+                    <!-- 宮位分隔斜線 -->
+                    <line x1="33" y1="33" x2="167" y2="167" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
+                    <line x1="33" y1="167" x2="167" y2="33" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
+                    <line x1="12" y1="60" x2="188" y2="140" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
+                    <line x1="60" y1="12" x2="140" y2="188" stroke="#d4af37" stroke-dasharray="2 2" stroke-opacity="0.3"/>
+                </svg>
+                
+                <!-- 核心符號標記 -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-16 h-16 rounded-full bg-amber-500/10 gold-border flex items-center justify-center gold-text cinzel-font text-lg font-bold shadow-[0_0_10px_rgba(212,175,55,0.3)]">
+                        🜛
+                    </div>
+                </div>
             </div>
+            <span class="text-[10px] tracking-widest text-amber-300/80 uppercase">✦ Aetherial Coordinates Locked ✦</span>
         </div>
 
     </div>
